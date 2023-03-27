@@ -1,10 +1,10 @@
-const notesModel = require('./notesModel')
+const NotesModel = require('./notesModel')
 
 describe('notesModel class', () => {
   let model;
 
   beforeEach(() => {
-    model = new notesModel();
+    model = new NotesModel();
   });
 
   it('returns an empty string', () => {
