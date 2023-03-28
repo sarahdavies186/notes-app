@@ -34,4 +34,13 @@ describe('Page view', () => {
     expect(document.querySelectorAll('div.note').length).toBe(1);
     expect(document.querySelectorAll('div.note')[0].textContent).toBe('This is a note')
   });
+
+  it('shows the correct number of notes on the page', () => {
+    const model = new NotesModel();
+    const view = new NotesView(model);
+    model.addNote('Buy milk');
+    view.displayNotes();
+    view.displayNotes();
+    expect(document.querySelectorAll('div.note').length).toBe(1);
+  })
 })
