@@ -19,4 +19,19 @@ describe('Page view', () => {
     view.displayNotes();
     expect(document.querySelectorAll('div.note').length).toBe(2);
   })
+
+  it('clicks the button', () => {
+    const model = new NotesModel();
+    const view = new NotesView(model);
+    const input = document.querySelector('#note-input');
+    input.value = 'This is a note'
+ 
+    const buttonEl = document.querySelector('#add-note-button');
+    buttonEl.click();
+    // model.addNote('This is a note');
+    // view.displayNotes();
+
+    expect(document.querySelectorAll('div.note').length).toBe(1);
+    expect(document.querySelectorAll('div.note')[0].textContent).toBe('This is a note')
+  });
 })
