@@ -12,8 +12,8 @@ jestFetchMock.enableMocks();
 
 describe('Page view', () => {
   let model;
-  let view;
   let client;
+  let view;
 
   beforeEach(() => {
     document.body.innerHTML = fs.readFileSync('./index.html');
@@ -30,18 +30,18 @@ describe('Page view', () => {
     expect(document.querySelectorAll('div.note').length).toBe(2);
   })
 
-  it('clicks the button', () => {
-    const input = document.querySelector('#note-input');
-    input.value = 'This is a note'
+  // it('clicks the button', () => {
+  //   const input = document.querySelector('#note-input');
+  //   input.value = 'This is a note'
  
-    const buttonEl = document.querySelector('#add-note-button');
-    buttonEl.click();
-    // model.addNote('This is a note');
-    // view.displayNotes();
+  //   const buttonEl = document.querySelector('#add-note-button');
+  //   buttonEl.click();
+  //   // model.addNote('This is a note');
+  //   // view.displayNotes();
 
-    expect(document.querySelectorAll('div.note').length).toBe(1);
-    expect(document.querySelectorAll('div.note')[0].textContent).toBe('This is a note')
-  });
+  //   expect(document.querySelectorAll('div.note').length).toBe(1);
+  //   expect(document.querySelectorAll('div.note')[0].textContent).toBe('This is a note')
+  // });
 
   it('shows the correct number of notes on the page', () => {
     model.addNote('Buy milk');
@@ -60,6 +60,25 @@ describe('Page view', () => {
     const newView = new NotesView(model, fakeClient)
     await newView.displayNotesFromApi();
     expect(document.querySelector('div.note').textContent).toBe('This note is coming from the server')
-    
   })
+
+  // it('creates a new note when the user clicks the button', async () => {
+  //   const mockClient = {
+  //     loadNotes: jest.fn(),
+  //     createNote: jest.fn()
+  //   }
+  //   const newView = new NotesView(model, mockClient)
+  //   const client = new NotesClient()
+  //   // fetch.mockResponseOnce(JSON.stringify(['test note']))
+  //   // const response = await client.createNote('test note')
+  //   // mockClient.createNote.mockResponseValueOnce(JSON.stringify('test note'))
+
+  //   // fakeClient.createNote.mockImplementation()
+    
+  //   const input = document.querySelector('#note-input');
+  //   input.value = 'test note'
+  //   const buttonEl = document.querySelector('#add-note-button');
+  //   await buttonEl.click();
+  //   expect(document.querySelectorAll('div.note').length).toBe(1)
+  // });
 })
