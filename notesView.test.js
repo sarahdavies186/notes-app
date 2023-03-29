@@ -5,15 +5,25 @@
 const fs = require('fs');
 const NotesModel = require('./notesModel');
 const NotesView = require('./notesView');
+const NotesClient = require('./notesClient');
+
+const jestFetchMock = require("jest-fetch-mock");
+jestFetchMock.enableMocks();
 
 describe('Page view', () => {
+  let model;
+  let view;
+  let client;
+
   beforeEach(() => {
     document.body.innerHTML = fs.readFileSync('./index.html');
+    client = new NotesClient();
+    model = new NotesModel();
+    view = new NotesView(model, client);
+    fetch.resetMocks();
   })
 
   it('displays a list of notes', () => {
-    const model = new NotesModel();
-    const view = new NotesView(model);
     model.addNote('Buy milk');
     model.addNote('Go to the gym');
     view.displayNotes();
@@ -21,8 +31,6 @@ describe('Page view', () => {
   })
 
   it('clicks the button', () => {
-    const model = new NotesModel();
-    const view = new NotesView(model);
     const input = document.querySelector('#note-input');
     input.value = 'This is a note'
  
@@ -36,11 +44,22 @@ describe('Page view', () => {
   });
 
   it('shows the correct number of notes on the page', () => {
-    const model = new NotesModel();
-    const view = new NotesView(model);
     model.addNote('Buy milk');
     view.displayNotes();
     view.displayNotes();
     expect(document.querySelectorAll('div.note').length).toBe(1);
+  })
+
+  it('displays notes from the api', async () => {
+    const fakeClient = {
+      loadNotes: jest.fn()
+    }
+    fakeClient.loadNotes.mockImplementation((callback) => {
+      callback(["This note is coming from the server"])
+    })
+    const newView = new NotesView(model, fakeClient)
+    await newView.displayNotesFromApi();
+    expect(document.querySelector('div.note').textContent).toBe('This note is coming from the server')
+    
   })
 })
