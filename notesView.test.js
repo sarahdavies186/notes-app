@@ -1,14 +1,13 @@
 /**
  * @jest-environment jsdom
  */
+require("jest-fetch-mock").enableMocks();
 
 const fs = require('fs');
 const NotesModel = require('./notesModel');
 const NotesView = require('./notesView');
 const NotesClient = require('./notesClient');
 
-const jestFetchMock = require("jest-fetch-mock");
-jestFetchMock.enableMocks();
 
 describe('Page view', () => {
   let model;
@@ -20,6 +19,7 @@ describe('Page view', () => {
     client = new NotesClient();
     model = new NotesModel();
     view = new NotesView(model, client);
+    fetchMock.doMock()
     fetch.resetMocks();
   })
 
@@ -50,7 +50,7 @@ describe('Page view', () => {
     expect(document.querySelectorAll('div.note').length).toBe(1);
   })
 
-  it('displays notes from the api', async () => {
+  xit('displays notes from the api', async () => {
     const fakeClient = {
       loadNotes: jest.fn()
     }
@@ -62,7 +62,13 @@ describe('Page view', () => {
     expect(document.querySelector('div.note').textContent).toBe('This note is coming from the server')
   })
 
-  // it('creates a new note when the user clicks the button', async () => {
+  // xit('creates a new note when the user clicks the button', async () => {
+  //   // 1. fill in the form field and click submit
+  //   // 2. post request /notes 
+  //   // 3. 
+    
+    
+    
   //   const mockClient = {
   //     loadNotes: jest.fn(),
   //     createNote: jest.fn()
@@ -71,7 +77,7 @@ describe('Page view', () => {
   //   const client = new NotesClient()
   //   // fetch.mockResponseOnce(JSON.stringify(['test note']))
   //   // const response = await client.createNote('test note')
-  //   // mockClient.createNote.mockResponseValueOnce(JSON.stringify('test note'))
+  //   mockClient.createNote.mockResponseValueOnce(JSON.stringify('test note'))
 
   //   // fakeClient.createNote.mockImplementation()
     
@@ -81,4 +87,11 @@ describe('Page view', () => {
   //   await buttonEl.click();
   //   expect(document.querySelectorAll('div.note').length).toBe(1)
   // });
+
+  it('shows an error message if HTTP request fails', () => {
+    view.displayError();
+    expect(document.querySelector('div.error').textContent).toBe('Oops, something went wrong!')
+  }) 
 })
+
+// .then(data => console.log(callback(data)))

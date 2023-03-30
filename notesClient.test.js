@@ -24,11 +24,27 @@ describe('NotesClient class', () => {
     })
   })
 
-  it("creates a new note in the web server", async () => {
+  it("creates a new note in the web server", (done) => {
     const client = new NotesClient()
     fetch.mockResponseOnce(JSON.stringify(['test note']))
-    const response = await client.createNote('test note')
-    expect(response.ok).toBe(true)
-    expect(response.status).toBe(true)
+    const response = client.createNote('test note')
+    expect(fetch).toHaveBeenCalledWith("http://localhost:3000/notes", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ 'content': 'test note' }),
+    });
+    done();
   })
+
+  // it("creates a new note in the web server", async () => {
+  //   const client = new NotesClient()
+  //   fetch.mockResponseOnce(JSON.stringify(['test note']))
+  //   const response = await client.createNote('test note')
+  //   expect(response.ok).toBe(true)
+  //   expect(response.status).toBe(true)
+  // })
+
+
 })
