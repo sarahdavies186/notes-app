@@ -7,7 +7,7 @@ html {
 }
 
 body {
-  width: 600px;
+  width: 800px;
   margin: auto;
   margin-top: 20px;
   padding: 20px;
@@ -20,7 +20,7 @@ body {
 }
 
 input[type=text] {
-  width: 80%;
+  width: 70%;
   background: #fefefe;
   border-radius: 4px;
   padding: 10px 8px;

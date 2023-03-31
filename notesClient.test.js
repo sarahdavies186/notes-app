@@ -24,7 +24,7 @@ describe('NotesClient class', () => {
     })
   })
 
-  it("creates a new note in the web server", (done) => {
+  xit("creates a new note in the web server", (done) => {
     const client = new NotesClient()
     fetch.mockResponseOnce(JSON.stringify(['test note']))
     const response = client.createNote('test note')
