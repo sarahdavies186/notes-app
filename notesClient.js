@@ -10,7 +10,7 @@ class notesClient {
       });
   }
 
-  createNote(notes, callback) {
+  createNote(notes, callback, errorCallback) {
     fetch("http://localhost:3000/notes", {
       method: "POST",
       headers: {
@@ -19,19 +19,18 @@ class notesClient {
       body: JSON.stringify(notes),
     })
       .then((response) => response.json())
-  
       .then((data) => callback(data))
-      // .catch((error) => {
-      //   errorCallback(error);
-      // });
+      .catch((error) => {
+        errorCallback(error);
+      });
   }
 
-  resetNotes() {
+  resetNotes(callback) {
     fetch("http://localhost:3000/notes", {
       method: "DELETE",
     })
-    // .then((response) => response.json())
-    //   .then((data) => callback(data))
+    .then((response) => response.json())
+    .then((data) => callback(data))
   }
 }
 

@@ -65,7 +65,7 @@ describe('Page view', () => {
 
   it('creates a new note when the user clicks the button', () => {
 
-    document.body.innerHTML = fs.readFileSync('./index.html');
+    // document.body.innerHTML = fs.readFileSync('./index.html');
     const mockClient = {
       loadNotes: jest.fn(),
       createNote: jest.fn()

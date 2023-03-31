@@ -11,9 +11,9 @@ class NotesView {
       const noteObj = {"content": note}
         this.client.createNote(noteObj, (data) => {
           console.log(data)
-          this.displayNotesFromApi()}
-          // () => {
-                // this.displayError()}
+          this.displayNotesFromApi()},
+          () => {
+                this.displayError()}
         )
       
       // this.addNewNote(note);
@@ -23,8 +23,10 @@ class NotesView {
     })
     
     this.resetButton.addEventListener('click', () => {
-      // this.client.resetNotes();
-      this.model.reset();
+      this.client.resetNotes(() => {
+        this.resetAllNotes();
+      });
+      // this.model.reset();
       // this.displayNotes();
     })
 
@@ -44,15 +46,6 @@ class NotesView {
     })
   }
 
-  // addNewNote(note) {
-  //   this.model.addNote(note)
-  //   this.client.createNote(note, 
-  //     , () => {
-  //     this.displayError;
-  //   }
-  //   )
-  // }
-
   displayNotesFromApi() {
     this.client.loadNotes((data) => {
       console.log(data)
@@ -69,6 +62,13 @@ class NotesView {
     errorElement.textContent = "Oops, something went wrong!";
     errorElement.className = 'error';
     this.mainContainerEl.append(errorElement);
+  }
+
+  resetAllNotes() {
+    const clearNotes = document.querySelectorAll('div.note');
+    clearNotes.forEach(note => {
+      note.remove();
+    });
   }
 }
 
